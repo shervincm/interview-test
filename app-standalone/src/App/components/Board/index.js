@@ -6,17 +6,20 @@ import Square from '../Square';
 /**
  * A board for the game of tic-tac-toe.  A 3x3 square.
  */
-const Board = ({onClick, squares}) => {
+const Board = ({onClick, squares, winningMove}) => {
+  // Function to render an individual square
     const renderSquare = (i) => (
         <Square
             value={squares[i]}
             onClick={() => onClick(i)}
+            // Check if the square is part of the winning move
+            isWinningMove={winningMove && winningMove.includes(i)}
         />
     );
 
     return (
         <div>
-            <div className="board-row">
+            <div className="board-row" data-testid="square">
               {renderSquare(0)}
               {renderSquare(1)}
               {renderSquare(2)}
@@ -44,7 +47,10 @@ Board.propTypes = {
     /**
      *  The handler for when a square is clicked
      */
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+
+    // the array of winning squares
+    winningSquares: PropTypes.array
 };
 
 export default Board;
